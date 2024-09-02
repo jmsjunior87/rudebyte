@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
+console.log('DISCORD_TOKEN:', process.env.DISCORD_TOKEN);
+
 // Configuração da Cohere API
 const apiKey = process.env.COHERE_API_KEY; // Agora usando a variável de ambiente
 
