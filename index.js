@@ -200,32 +200,32 @@ client.on('messageCreate', async message => {
             },
             body: JSON.stringify({
                 model: 'command-xlarge-nightly',
-                prompt: `Você é um bot que responde de forma muito informal e grosseira, usando gírias e palavrões. Use o mínimo de pontuação possível, a não ser que seja uma pergunta. Responda de forma curta e direta.\nUsuário: ${userMessage}\nBot:`,
+                prompt: userMessage,
                 max_tokens: 50,
                 temperature: 0.7,
             }),
         });
-
+    
         if (!cohereResponse.ok) {
             throw new Error(`Erro na API da Cohere: ${cohereResponse.statusText}`);
         }
-
+    
         const cohereData = await cohereResponse.json();
-
-        // Adicione esta linha para registrar a resposta completa
+    
+        // Verifique a resposta completa
         console.log('Resposta da API da Cohere:', cohereData);
-         
-        if (!cohereData.generations || !cohereData.generations.length) {
-            throw new Error('A resposta da API não contém gerações.');
+    
+        // Verifique se a resposta contém a propriedade `text`
+        if (!cohereData.text) {
+            throw new Error('A resposta da API não contém o texto esperado.');
         }
-
-        const botResponse = cohereData.generations[0].text.trim();
+    
+        const botResponse = cohereData.text.trim();
         message.channel.send(botResponse);
     } catch (error) {
         console.error('Erro ao chamar a API da Cohere:', error);
         message.channel.send('Houve um erro ao processar sua solicitação.');
     }
-});
 
 client.login(process.env.DISCORD_TOKEN);
 console.log('COHERE_API_KEY:', process.env.COHERE_API_KEY);
