@@ -202,7 +202,7 @@ client.on('messageCreate', async message => {
             },
             body: JSON.stringify({
                 model: 'command-xlarge-nightly',
-                prompt: userMessage,
+                prompt: `Você é um bot que responde de forma muito informal e grosseira, usando gírias e palavrões. Use o mínimo de pontuação possível, a não ser que seja uma pergunta. Responda de forma curta e direta.\nUsuário: ${userMessage}\nBot:`,
                 max_tokens: 50,
                 temperature: 0.7,
             }),
