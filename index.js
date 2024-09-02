@@ -18,10 +18,10 @@ const client = new Client({
 });
 
 // Obtém o token do ambiente
-const discordToken = process.env.DISCORD_TOKEN;
+const discordToken = '$process.env.DISCORD_TOKEN';
 
 // Configuração da Cohere API
-const apiKey = process.env.COHERE_API_KEY; // Agora usando a variável de ambiente
+const apiKey = '$process.env.COHERE_API_KEY'; // Agora usando a variável de ambiente
 
 // Função para adicionar um delay (em milissegundos)
 function sleep(ms) {
