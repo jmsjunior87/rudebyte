@@ -1,0 +1,24 @@
+{
+  "name": "meu-bot-discord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Junior",
+  "license": "MIT",
+  "dependencies": {
+    "cohere-ai": "^7.12.1",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.57.0",
+    "punycode": "^2.3.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
