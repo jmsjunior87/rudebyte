@@ -212,6 +212,9 @@ client.on('messageCreate', async message => {
 
         const cohereData = await cohereResponse.json();
 
+        // Adicione esta linha para registrar a resposta completa
+        console.log('Resposta da API da Cohere:', cohereData);
+         
         if (!cohereData.generations || !cohereData.generations.length) {
             throw new Error('A resposta da API não contém gerações.');
         }
