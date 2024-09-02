@@ -6,9 +6,6 @@ dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
 console.log('DISCORD_TOKEN:', process.env.DISCORD_TOKEN);
 
-// Configuração da Cohere API
-const apiKey = process.env.COHERE_API_KEY; // Agora usando a variável de ambiente
-
 // Configurações do Discord
 const client = new Client({ 
     intents: [
@@ -19,6 +16,12 @@ const client = new Client({
         GatewayIntentBits.GuildVoiceStates
     ]
 });
+
+// Obtém o token do ambiente
+const discordToken = process.env.DISCORD_TOKEN;
+
+// Configuração da Cohere API
+const apiKey = process.env.COHERE_API_KEY; // Agora usando a variável de ambiente
 
 // Função para adicionar um delay (em milissegundos)
 function sleep(ms) {
