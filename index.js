@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
-console.log('DISCORD_TOKEN:', process.env.DISCORD_TOKEN);
-
 // Configurações do Discord
 const client = new Client({ 
     intents: [
@@ -232,4 +230,3 @@ client.on('messageCreate', async message => {
 });
 
 client.login(discordToken);
-console.log('COHERE_API_KEY:', process.env.COHERE_API_KEY);
