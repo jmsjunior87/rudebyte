@@ -216,16 +216,18 @@ client.on('messageCreate', async message => {
         console.log('Resposta da API da Cohere:', cohereData);
     
         // Verifique se a resposta contém a propriedade `text`
-        if (!cohereData.text) {
-            throw new Error('A resposta da API não contém o texto esperado.');
+        if (!cohereData || !cohereData.generations || !cohereData.generations.length) {
+            throw new Error('Nenhuma resposta válida recebida da API da Cohere.');
         }
     
-        const botResponse = cohereData.text.trim();
-        message.channel.send(botResponse);
+        const botResponse = cohereData.generations[0].text.trim();
+    
+        message.channel.send(botResponse || "Desculpe, não entendi o que você quis dizer.");
     } catch (error) {
         console.error('Erro ao chamar a API da Cohere:', error);
-        message.channel.send('Houve um erro ao processar sua solicitação.');
+        message.channel.send("Ocorreu um erro ao tentar processar sua mensagem. Tente novamente mais tarde.");
     }
+});
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(discordToken);
 console.log('COHERE_API_KEY:', process.env.COHERE_API_KEY);
