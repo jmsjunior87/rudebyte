@@ -193,7 +193,8 @@ client.on('messageCreate', async message => {
 
     // Chama a API da Cohere para gerar uma resposta de IA
     try {
-        const cohereResponse = await fetch('https://api.cohere.ai/generate', {
+        //const cohereResponse = await fetch('https://api.cohere.ai/generate', {
+        const cohereResponse = await fetch('https://api.cohere.ai/v1/generate', {  // Usando a URL de versão mais recente
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
