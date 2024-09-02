@@ -28,6 +28,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', err => {
+    console.error('Uncaught Exception thrown:', err);
+});
+
 client.once('ready', () => {
     console.log(`Bot mal-humorado com IA logado como ${client.user.tag}`);
 });
