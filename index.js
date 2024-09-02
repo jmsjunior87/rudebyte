@@ -201,3 +201,4 @@ client.on('messageCreate', async message => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+console.log('COHERE_API_KEY:', process.env.COHERE_API_KEY);
