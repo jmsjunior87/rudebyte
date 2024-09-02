@@ -22,6 +22,7 @@ const discordToken = process.env.DISCORD_TOKEN;
 
 // Configuração da Cohere API
 const apiKey = process.env.COHERE_API_KEY; // Agora usando a variável de ambiente
+const cohereVersion = '2022-12-06'; // Especifica a versão da API da Cohere que você deseja usar
 
 // Função para adicionar um delay (em milissegundos)
 function sleep(ms) {
