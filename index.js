@@ -43,7 +43,7 @@ client.on('messageCreate', async message => {
 
     // Verifica se a mensagem contém @everyone ou @here e bloqueia a mensagem
     if (message.mentions.everyone || message.mentions.has(message.guild.roles.everyone)) {
-        return message.reply("Você não pode mencionar @everyone ou @here.");
+        return //message.reply("Você não pode mencionar @everyone ou @here.");
     }
 
     if (!message.mentions.has(client.user) && !message.content.startsWith('!')) return;
