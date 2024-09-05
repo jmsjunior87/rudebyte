@@ -41,6 +41,11 @@ client.once('ready', () => {
 client.on('messageCreate', async message => {
     if (message.author.bot) return;
 
+    // Verifica se a mensagem contém @everyone ou @here e bloqueia a mensagem
+    if (message.mentions.everyone || message.mentions.has(message.guild.roles.everyone)) {
+        return message.reply("Você não pode mencionar @everyone ou @here.");
+    }
+
     if (!message.mentions.has(client.user) && !message.content.startsWith('!')) return;
 
     const userMessage = message.content.toLowerCase();
@@ -190,7 +195,6 @@ client.on('messageCreate', async message => {
 
     // Chama a API da Cohere para gerar uma resposta de IA
     try {
-        //const cohereResponse = await fetch('https://api.cohere.ai/generate', {
         const cohereResponse = await fetch('https://api.cohere.ai/v1/generate', {  // Usando a URL de versão mais recente
             method: 'POST',
             headers: {
@@ -199,32 +203,21 @@ client.on('messageCreate', async message => {
             },
             body: JSON.stringify({
                 model: 'command-xlarge-nightly',
-                prompt: `Você é um bot que responde de forma muito informal e grosseira, com até 50 palavras, usando gírias e palavrões. Use o mínimo de pontuação possível, a não ser que seja uma pergunta. Responda de forma curta e direta. Responda à seguinte pergunta de forma concisa:\nUsuário: ${userMessage}\nBot:`,
-                max_tokens: 50,
-                temperature: 0.7,
+                prompt: `Você é um bot que responde de forma muito informal e grosseira, com até 50 palavras, usando gírias e palavrões. Use o mínimo de pontuação possível, a não ser que seja uma pergunta. Responda de forma curta e direta. Responda à seguinte pergunta de forma concisa: ${message.content}`,
+                max_tokens: 150,
             }),
         });
-    
-        if (!cohereResponse.ok) {
-            throw new Error(`Erro na API da Cohere: ${cohereResponse.statusText}`);
+        
+        const data = await cohereResponse.json();
+        const aiResponse = data.generations[0]?.text?.trim() || "Desculpe, não entendi a pergunta.";
+
+        if (aiResponse) {
+            await sleep(1000); // Adiciona um delay de 1 segundo antes de enviar a resposta
+            message.reply(aiResponse);
         }
-    
-        const cohereData = await cohereResponse.json();
-    
-        // Verifique a resposta completa
-        console.log('Resposta da API da Cohere:', cohereData);
-    
-        // Verifique se a resposta contém a propriedade `text`
-        if (!cohereData || !cohereData.generations || !cohereData.generations.length) {
-            throw new Error('Nenhuma resposta válida recebida da API da Cohere.');
-        }
-    
-        const botResponse = cohereData.generations[0].text.trim();
-    
-        message.channel.send(botResponse || "Desculpe, não entendi o que você quis dizer.");
     } catch (error) {
-        console.error('Erro ao chamar a API da Cohere:', error);
-        message.channel.send("Ocorreu um erro ao tentar processar sua mensagem. Tente novamente mais tarde.");
+        console.error("Erro ao chamar a API da Cohere:", error);
+        message.reply("Houve um erro ao processar sua solicitação.");
     }
 });
 
